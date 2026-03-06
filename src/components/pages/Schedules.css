@@ -1,0 +1,33 @@
+.sch-hero { background: var(--navy); padding: 52px 0; text-align: center; position: relative; overflow: hidden; }
+.sch-hero::after { content:''; position:absolute; inset:0; background: radial-gradient(ellipse 500px 280px at 50% 100%, rgba(20,184,166,.12), transparent 70%); }
+.sch-hero .container { position: relative; z-index:1; }
+.sch-hero__h1   { font-family: var(--display); font-size: 2.1rem; font-weight: 800; color: #fff; margin: .65rem 0 .875rem; }
+.sch-hero__h1 span { color: var(--teal-xl); }
+.sch-hero__sub  { color: rgba(255,255,255,.6); font-size: .9rem; max-width: 520px; margin: 0 auto; }
+
+.sch-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.sch-modes   { display: flex; gap: .45rem; }
+.sch-mode-btn {
+  padding: .38rem .9rem; border-radius: 100px;
+  border: 1.5px solid var(--line); background: #fff;
+  font-size: .8rem; font-weight: 500; color: var(--ink-2); cursor: pointer; transition: var(--ease);
+}
+.sch-mode-btn:hover    { border-color: var(--teal); color: var(--teal); }
+.sch-mode-btn--on      { background: var(--teal); color: #fff; border-color: var(--teal); }
+
+.sch-search-wrap { display: flex; align-items: center; gap: .5rem; background: #fff; border: 1.5px solid var(--line); border-radius: 100px; padding: .38rem 1rem; }
+.sch-search-wrap svg { color: var(--ink-3); flex-shrink: 0; }
+.sch-search { border: none; font-size: .85rem; color: var(--ink); width: 200px; background: transparent; }
+.sch-search:focus { outline: none; }
+
+.sch-table-wrap { overflow-x: auto; border-radius: var(--r3); border: 1.5px solid var(--line); box-shadow: var(--sh-s); }
+.sch-zoom-btn, .sch-wa-btn {
+  display: inline-flex; align-items: center; gap: .3rem;
+  padding: .25rem .7rem; border-radius: 100px; font-size: .75rem; font-weight: 600; transition: var(--ease);
+}
+.sch-zoom-btn { background: #dbeafe; color: #1d4ed8; }
+.sch-zoom-btn:hover { background: #bfdbfe; }
+.sch-wa-btn   { background: #d1fae5; color: #059669; }
+.sch-wa-btn:hover { background: #a7f3d0; }
+
+.sch-note { margin-top: 1.5rem; padding: 1rem 1.25rem; background: var(--bg-soft); border: 1px solid var(--line-soft); border-radius: var(--r2); font-size: .83rem; color: var(--ink-2); line-height: 1.65; }

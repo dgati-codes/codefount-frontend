@@ -1,0 +1,36 @@
+.ct-hero { background: var(--navy); padding: 56px 0; text-align: center; position: relative; overflow: hidden; }
+.ct-hero::after { content:''; position:absolute; inset:0; background: radial-gradient(ellipse 500px 280px at 50% 100%, rgba(20,184,166,.12), transparent 70%); }
+.ct-hero__inner { position: relative; z-index: 1; }
+.ct-hero__h1 { font-family: var(--display); font-size: 2.1rem; font-weight: 800; color: #fff; margin: .65rem 0 .875rem; }
+.ct-hero__h1 span { color: var(--teal-xl); }
+.ct-hero__sub { color: rgba(255,255,255,.62); font-size: .9rem; max-width: 500px; margin: 0 auto; }
+
+.ct-body { display: grid; grid-template-columns: 1fr 1.5fr; gap: 3rem; align-items: start; }
+
+.ct-info__title { font-family: var(--display); font-size: 1.2rem; font-weight: 800; margin-bottom: 1.5rem; color: var(--ink); }
+.ct-info__list  { display: flex; flex-direction: column; gap: 1.1rem; margin-bottom: 1.75rem; }
+.ct-info__item  { display: flex; gap: .875rem; align-items: flex-start; }
+.ct-info__icon  {
+  width: 40px; height: 40px; border-radius: var(--r2); flex-shrink: 0;
+  background: rgba(15,118,110,.1); color: var(--teal);
+  display: flex; align-items: center; justify-content: center;
+}
+.ct-info__item strong { font-family: var(--display); font-size: .85rem; font-weight: 700; color: var(--ink); display: block; margin-bottom: .15rem; }
+.ct-info__item p { font-size: .83rem; color: var(--ink-2); }
+
+.ct-map {
+  background: var(--bg-soft); border: 1.5px solid var(--line-soft); border-radius: var(--r3);
+  height: 180px; display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; color: var(--ink-2); font-weight: 500;
+}
+
+.ct-form { background: #fff; border: 1.5px solid var(--line); border-radius: var(--r4); padding: 2rem; box-shadow: var(--sh-s); }
+.ct-form__title { font-family: var(--display); font-size: 1.2rem; font-weight: 800; margin-bottom: 1.5rem; color: var(--ink); }
+.ct-form__fields { display: flex; flex-direction: column; gap: .9rem; }
+.ct-row { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; }
+.ct-success { background: #d1fae5; border: 1px solid #6ee7b7; border-radius: var(--r2); padding: 1.25rem; color: var(--green); font-weight: 600; font-size: .9rem; }
+
+@media (max-width: 768px) {
+  .ct-body { grid-template-columns: 1fr; }
+  .ct-row  { grid-template-columns: 1fr; }
+}

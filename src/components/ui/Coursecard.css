@@ -1,0 +1,51 @@
+.cc {
+  background: #fff;
+  border-radius: var(--r3);
+  border: 1.5px solid var(--line);
+  box-shadow: var(--sh-s);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  transition: var(--ease);
+}
+.cc:hover { transform: translateY(-5px); box-shadow: var(--sh-l); border-color: var(--teal-l); }
+
+.cc__banner {
+  position: relative; height: 100px;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: .65rem .875rem; gap: .2rem;
+}
+.cc__tag {
+  position: absolute; top: .55rem; right: .55rem;
+  padding: .12rem .55rem; background: rgba(255,255,255,.88);
+  border-radius: 100px; font-size: .6rem; font-weight: 800;
+  color: var(--ink); text-transform: uppercase; letter-spacing: .04em;
+}
+.cc__title {
+  font-family: var(--display); font-weight: 800; font-size: .98rem;
+  color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,.3); line-height: 1.2;
+}
+.cc__dur {
+  display: flex; align-items: center; gap: .25rem;
+  font-size: .67rem; color: rgba(255,255,255,.8); font-weight: 500;
+}
+
+.cc__body { padding: .75rem .875rem 1rem; display: flex; flex-direction: column; gap: .35rem; flex: 1; }
+.cc__cat  { font-size: .67rem; color: var(--teal); font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+.cc__meta { display: flex; justify-content: space-between; font-size: .73rem; color: var(--ink-2); }
+.cc__meta span { display: flex; align-items: center; gap: .25rem; }
+.cc__meta svg:last-of-type { color: var(--amber); }
+.cc__level { font-size: .7rem; color: var(--ink-3); }
+
+.cc__price { display: flex; align-items: center; gap: .5rem; margin-top: auto; padding-top: .4rem; flex-wrap: wrap; }
+.cc__offer    { font-family: var(--display); font-size: .95rem; font-weight: 800; color: var(--teal); }
+.cc__original { font-size: .75rem; color: var(--ink-3); text-decoration: line-through; }
+.cc__save     { font-size: .68rem; font-weight: 700; background: #d1fae5; color: var(--green); padding: .1rem .45rem; border-radius: 100px; }
+
+.cc__cta {
+  display: flex; align-items: center; justify-content: center; gap: .35rem;
+  width: 100%; padding: .52rem; border-radius: var(--r2);
+  background: var(--teal); color: #fff;
+  font-family: var(--display); font-size: .78rem; font-weight: 700;
+  margin-top: .5rem; transition: var(--ease);
+}
+.cc__cta:hover { background: #0c6560; }
