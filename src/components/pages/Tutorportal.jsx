@@ -1,8 +1,8 @@
-import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { Navigate } from 'react-router-dom';
 import { Video, FileText, Plus, Send, Users, BookOpen, Bell, LogOut, Check, X } from 'lucide-react';
-import { courses, tutorResources } from '../../data/mockData';
+import { useState, useEffect } from 'react';
+import { resources as resourcesApi, courses as coursesApi, notifications as notifApi } from '../../api/api';
 import './TutorPortal.css';
 
 const TABS = [
@@ -15,10 +15,26 @@ function ResourceForm({ onSave }) {
   const [form, setForm] = useState({ courseId:'', week:'', title:'', videoUrl:'', resourceUrl:'', type:'video' });
   const set = k => e => setForm(f => ({ ...f, [k]: e.target.value }));
 
-  const submit = () => {
+  const [saving, setSaving] = useState(false);
+  const submit = async () => {
     if (!form.courseId || !form.title) return;
-    onSave({ ...form, id: Date.now(), sharedAt: 'Just now', tutor: 'You' });
-    setForm({ courseId:'', week:'', title:'', videoUrl:'', resourceUrl:'', type:'video' });
+    setSaving(true);
+    try {
+      const r = await resourcesApi.create({
+        course_id:    Number(form.courseId),
+        week:         form.week,
+        title:        form.title,
+        rtype:        form.type,
+        video_url:    form.videoUrl    || null,
+        resource_url: form.resourceUrl || null,
+      });
+      onSave(r);
+      setForm({ courseId:'', week:'', title:'', videoUrl:'', resourceUrl:'', type:'video' });
+    } catch(e) {
+      alert(e.response?.data?.detail || 'Failed to share resource');
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -56,7 +72,7 @@ function ResourceForm({ onSave }) {
         <label className="form-label">Reference / Resource URL (Docs, GitHub, Drive…)</label>
         <input className="form-input" type="url" placeholder="https://docs.example.com" value={form.resourceUrl} onChange={set('resourceUrl')}/>
       </div>
-      <button className="btn btn-primary" onClick={submit}><Send size={14}/> Share with Students</button>
+      <button className="btn btn-primary" onClick={submit} disabled={saving}><Send size={14}/> {saving ? 'Sharing…' : 'Share with Students'}</button>
     </div>
   );
 }
@@ -118,17 +134,17 @@ export default function TutorPortal() {
                 {shared.map(r => (
                   <div key={r.id} className="tutor-resource-item">
                     <div className="tutor-resource-type-icon">
-                      {r.type==='video' ? <Video size={16} color="var(--teal)"/> : <FileText size={16} color="#7c3aed"/>}
+                      {r.rtype==='video'||r.type==='video' ? <Video size={16} color="var(--teal)"/> : <FileText size={16} color="#7c3aed"/>}
                     </div>
                     <div style={{flex:1}}>
                       <strong style={{fontSize:'.88rem'}}>{r.title}</strong>
-                      <p style={{fontSize:'.75rem',color:'var(--ink-3)',margin:'2px 0 4px'}}>{r.week} · {r.sharedAt}</p>
+                      <p style={{fontSize:'.75rem',color:'var(--ink-3)',margin:'2px 0 4px'}}>{r.week} · {new Date(r.created_at||Date.now()).toLocaleDateString()}</p>
                       <div style={{display:'flex',gap:'.5rem',flexWrap:'wrap'}}>
                         {r.videoUrl    && <a href={r.videoUrl}    target="_blank" rel="noopener noreferrer" className="prof-resource-link prof-resource-link--video"><Video size={11}/> Video</a>}
                         {r.resourceUrl && <a href={r.resourceUrl} target="_blank" rel="noopener noreferrer" className="prof-resource-link prof-resource-link--doc"><FileText size={11}/> Resource</a>}
                       </div>
                     </div>
-                    <span className={`adm-chip ${r.type==='video'?'adm-chip--enrolled':'adm-chip--completed'}`}>{r.type}</span>
+                    <span className={`adm-chip ${r.rtype==='video'||r.type==='video'?'adm-chip--enrolled':'adm-chip--completed'}`}>{r.rtype||r.type}</span>
                   </div>
                 ))}
               </div>

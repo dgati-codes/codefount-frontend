@@ -17,10 +17,11 @@ export default function Navbar() {
   return (
     <header className="nav">
       <div className="container nav__row">
-
         {/* Logo */}
         <Link to="/" className="nav__logo" onClick={close}>
-          <div className="nav__logo-icon"><span>CF</span></div>
+          <div className="nav__logo-icon">
+            <span>CF</span>
+          </div>
           <div>
             <div className="nav__logo-name">CodeFount</div>
             <div className="nav__logo-tag">IT Training</div>
@@ -29,12 +30,18 @@ export default function Navbar() {
 
         {/* Desktop links */}
         <nav className="nav__links hide-mob">
-          <Link to="/" className={`nav__link ${pathname === '/' ? 'active' : ''}`}>
+          <Link
+            to="/"
+            className={`nav__link ${pathname === "/" ? "active" : ""}`}
+          >
             <Home size={13} /> Home
           </Link>
-          {navLinks.map(l => (
-            <Link key={l.path} to={l.path}
-              className={`nav__link ${pathname === l.path ? 'active' : ''}`}>
+          {navLinks.map((l) => (
+            <Link
+              key={l.path}
+              to={l.path}
+              className={`nav__link ${pathname === l.path ? "active" : ""}`}
+            >
               {l.label}
             </Link>
           ))}
@@ -45,23 +52,33 @@ export default function Navbar() {
           {user ? (
             <>
               <Link to="/profile" className="nav__user">
-                <div className="nav__avatar">{user.name[0].toUpperCase()}</div>
-                <span>{user.name}</span>
+                <div className="nav__avatar">
+                  {user?.name ? user.name[0].toUpperCase() : "U"}
+                </div>
+                <span>{user?.name || "User"}</span>
               </Link>
-              <button className="nav__logout" onClick={handleLogout} title="Sign out">
+              <button
+                className="nav__logout"
+                onClick={handleLogout}
+                title="Sign out"
+              >
                 <LogOut size={15} />
               </button>
             </>
           ) : (
             <>
-              <Link to="/login" className="nav__signin">Sign In</Link>
-              <Link to="/register" className="btn btn-amber btn-sm">Get Started</Link>
+              <Link to="/login" className="nav__signin">
+                Sign In
+              </Link>
+              <Link to="/register" className="btn btn-amber btn-sm">
+                Get Started
+              </Link>
             </>
           )}
         </div>
 
         {/* Mobile toggle */}
-        <button className="nav__toggle" onClick={() => setOpen(o => !o)}>
+        <button className="nav__toggle" onClick={() => setOpen((o) => !o)}>
           {open ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
@@ -69,24 +86,56 @@ export default function Navbar() {
       {/* Mobile drawer */}
       {open && (
         <div className="nav__drawer">
-          <Link to="/" className={`nav__drawer-link ${pathname==='/'?'active':''}`} onClick={close}>
-            <Home size={14}/> Home
+          <Link
+            to="/"
+            className={`nav__drawer-link ${pathname === "/" ? "active" : ""}`}
+            onClick={close}
+          >
+            <Home size={14} /> Home
           </Link>
-          {navLinks.map(l => (
-            <Link key={l.path} to={l.path}
-              className={`nav__drawer-link ${pathname===l.path?'active':''}`}
-              onClick={close}>{l.label}</Link>
+          {navLinks.map((l) => (
+            <Link
+              key={l.path}
+              to={l.path}
+              className={`nav__drawer-link ${pathname === l.path ? "active" : ""}`}
+              onClick={close}
+            >
+              {l.label}
+            </Link>
           ))}
           <div className="nav__drawer-foot">
             {user ? (
               <>
-                <Link to="/profile" className="btn btn-outline btn-sm" onClick={close}>My Profile</Link>
-                <button className="btn btn-primary btn-sm" onClick={handleLogout}>Sign Out</button>
+                <Link
+                  to="/profile"
+                  className="btn btn-outline btn-sm"
+                  onClick={close}
+                >
+                  My Profile
+                </Link>
+                <button
+                  className="btn btn-primary btn-sm"
+                  onClick={handleLogout}
+                >
+                  Sign Out
+                </button>
               </>
             ) : (
               <>
-                <Link to="/login"    className="btn btn-outline btn-sm" onClick={close}>Sign In</Link>
-                <Link to="/register" className="btn btn-amber btn-sm"   onClick={close}>Get Started</Link>
+                <Link
+                  to="/login"
+                  className="btn btn-outline btn-sm"
+                  onClick={close}
+                >
+                  Sign In
+                </Link>
+                <Link
+                  to="/register"
+                  className="btn btn-amber btn-sm"
+                  onClick={close}
+                >
+                  Get Started
+                </Link>
               </>
             )}
           </div>

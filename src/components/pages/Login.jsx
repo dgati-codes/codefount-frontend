@@ -6,17 +6,24 @@ import './Auth.css';
 
 export default function Login() {
   const [email, setEmail] = useState('');
-  const [pass, setPass]   = useState('');
-  const [show, setShow]   = useState(false);
-  const [err, setErr]     = useState('');
-  const { login } = useAuth();
-  const navigate  = useNavigate();
+  const [pass, setPass] = useState("");
+  const [show, setShow] = useState(false);
+  const [err, setErr] = useState("");
 
-  const handle = (e) => {
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
+  const handle = async (e) => {
     e.preventDefault();
-    const res = login(email, pass);
-    if (res.ok) navigate('/profile');
-    else setErr(res.error || 'Login failed');
+    setErr("");
+
+    const res = await login(email, pass);
+
+    if (res.ok) {
+      navigate("/profile");
+    } else {
+      setErr(res.error || "Login failed");
+    }
   };
 
   return (
@@ -31,14 +38,18 @@ export default function Login() {
               <div className="auth-promo__tag">IT Training</div>
             </div>
           </div>
+
           <span className="auth-promo__badge">🚀 Now Enrolling</span>
+
           <h2 className="auth-promo__h1">
             Welcome Back to <span>CodeFount</span>
           </h2>
+
           <p className="auth-promo__sub">
             Sign in to access your courses, track progress and connect with your
             cohort.
           </p>
+
           <div className="auth-promo__items">
             {[
               "Access your enrolled courses",
@@ -58,16 +69,21 @@ export default function Login() {
       <div className="auth-form-side">
         <div className="auth-form-box">
           <h2>Sign In</h2>
+
           <p>
             Don't have an account? <Link to="/register">Register free</Link>
           </p>
+
           {err && <div className="auth-error">{err}</div>}
+
           <form onSubmit={handle}>
             <div className="auth-fields">
+              {/* Email */}
               <div className="form-group">
                 <label className="form-label">
                   Email <span>*</span>
                 </label>
+
                 <input
                   className="form-input"
                   type="email"
@@ -77,6 +93,8 @@ export default function Login() {
                   required
                 />
               </div>
+
+              {/* Password */}
               <div className="form-group">
                 <div
                   style={{
@@ -88,10 +106,12 @@ export default function Login() {
                   <label className="form-label">
                     Password <span>*</span>
                   </label>
+
                   <Link to="/forgot-password" className="auth-fp-link">
                     Forgot password?
                   </Link>
                 </div>
+
                 <div className="auth-pw">
                   <input
                     className="form-input"
@@ -101,6 +121,7 @@ export default function Login() {
                     onChange={(e) => setPass(e.target.value)}
                     required
                   />
+
                   <button
                     type="button"
                     className="auth-pw-toggle"
@@ -111,6 +132,8 @@ export default function Login() {
                 </div>
               </div>
             </div>
+
+            {/* Submit */}
             <button
               type="submit"
               className="btn btn-primary btn-lg auth-submit"
@@ -118,7 +141,9 @@ export default function Login() {
               Sign In
             </button>
           </form>
+
           <div className="auth-divider">or</div>
+
           <Link to="/register" className="btn btn-outline btn-lg auth-submit">
             Create an Account
           </Link>

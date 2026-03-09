@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Search,
   Video,
@@ -8,7 +7,8 @@ import {
   Users,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { schedules, courses } from "../../data/mockData";
+import { useState, useEffect } from "react";
+import { schedules as schedulesApi } from "../../api/api";
 import "./Schedules.css";
 
 const MODES = ["All", "e-Learning", "Classroom", "Online"];
@@ -49,16 +49,21 @@ const courseMap = {
   "Spring Boot with Microservices": 11,
 };
 
-const SCHEDULE_WITH_MODE = schedules.map((s, i) => ({
-  ...s,
-  mode: ["e-Learning", "Classroom", "Online"][i % 3],
-}));
-
 export default function Schedules() {
   const [mode, setMode] = useState("All");
   const [search, setSearch] = useState("");
+  const [allItems, setAllItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const list = SCHEDULE_WITH_MODE.filter((s) => {
+  useEffect(() => {
+    schedulesApi
+      .list()
+      .then((items) => setAllItems(items || []))
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  }, []);
+
+  const list = allItems.filter((s) => {
     const matchMode = mode === "All" || s.mode === mode;
     const matchSearch = s.course.toLowerCase().includes(search.toLowerCase());
     return matchMode && matchSearch;

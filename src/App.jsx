@@ -34,26 +34,16 @@ function Protected({ children }) {
 }
 
 function AdminRoute({ children }) {
-  console.log("ADMIN ROUTE HIT");
-  console.log("BYPASS:", import.meta.env.VITE_BYPASS_ADMIN);
+  const { user, isAdmin } = useAuth();
+  if (!user) return <Navigate to="/login" replace />;
+  if (!isAdmin) return <Navigate to="/profile" replace />;
+  return children;
+}
 
-  const { user } = useAuth();
-
-  if (import.meta.env.VITE_BYPASS_ADMIN === "true") {
-    console.log("BYPASS ACTIVE");
-    return children;
-  }
-
-  if (!user) {
-    console.log("NO USER -> LOGIN");
-    return <Navigate to="/login" replace />;
-  }
-
-  if (user.role !== "admin") {
-    console.log("NOT ADMIN");
-    return <Navigate to="/profile" replace />;
-  }
-
+function TrainerRoute({ children }) {
+  const { user, isTrainer, isAdmin } = useAuth();
+  if (!user) return <Navigate to="/login" replace />;
+  if (!isTrainer && !isAdmin) return <Navigate to="/profile" replace />;
   return children;
 }
 
@@ -186,9 +176,9 @@ export default function App() {
           <Route
             path="/tutor"
             element={
-              <Protected>
+              <TrainerRoute>
                 <TutorPortal />
-              </Protected>
+              </TrainerRoute>
             }
           />
 
