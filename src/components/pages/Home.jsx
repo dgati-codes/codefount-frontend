@@ -152,10 +152,30 @@ function CoursesSection() {
 /* ── Services Preview ── */
 function ServicesPreview() {
   const items = [
-    { icon:'🖥️', title:'Online Live Training',   color:'#0f766e', desc:'Interactive live sessions from anywhere with full recorded access and real-time Q&A.' },
-    { icon:'🎯', title:'Placement Assistance',    color:'#5b21b6', desc:'Dedicated team, 200+ partners, resume review and mock interviews to land your next role.' },
-    { icon:'🔧', title:'Real-Time Projects',      color:'#0d9488', desc:'Graduate with 3–5 production-quality apps built alongside industry mentors.' },
-    { icon:'🏢', title:'Corporate Training',       color:'#b45309', desc:'Bespoke programs for teams delivered on-site, remote or hybrid with ROI tracking.' },
+    {
+      icon: "🖥️",
+      title: "Online Live Training",
+      color: "#0f766e",
+      desc: "Interactive live sessions from anywhere with full recorded access and real-time Q&A.",
+    },
+    {
+      icon: "🎯",
+      title: "Placement Assistance",
+      color: "#5b21b6",
+      desc: "Dedicated team, 10+ partners, resume review and mock interviews to land your next role.",
+    },
+    {
+      icon: "🔧",
+      title: "Real-Time Projects",
+      color: "#0d9488",
+      desc: "Graduate with 3–5 production-quality apps built alongside industry mentors.",
+    },
+    {
+      icon: "🏢",
+      title: "Corporate Training",
+      color: "#b45309",
+      desc: "Bespoke programs for teams delivered on-site, remote or hybrid with ROI tracking.",
+    },
   ];
   return (
     <section className="section">

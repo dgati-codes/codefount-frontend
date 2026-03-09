@@ -1,0 +1,61 @@
+/* ── Tutor Portal — mirrors admin layout ── */
+.tutor-layout { display:flex; min-height:100vh; background:#f0f4f8; }
+.tutor-side {
+  width:210px; flex-shrink:0; background:var(--navy); color:#fff;
+  display:flex; flex-direction:column; position:sticky; top:0; height:100vh; overflow-y:auto;
+}
+.tutor-side-logo {
+  display:flex; align-items:center; gap:.75rem;
+  padding:1.3rem 1.2rem; border-bottom:1px solid rgba(255,255,255,.1);
+}
+.tutor-side-logo-icon {
+  width:36px; height:36px; border-radius:8px; background:var(--teal);
+  display:flex; align-items:center; justify-content:center; font-size:1.1rem;
+}
+.tutor-side-logo strong { font-size:.9rem; font-family:var(--display); display:block; color:#fff; }
+.tutor-side-logo span { font-size:.7rem; color:rgba(255,255,255,.4); }
+.tutor-side-nav { flex:1; padding:.8rem .7rem; display:flex; flex-direction:column; gap:2px; }
+.tutor-nav-btn {
+  display:flex; align-items:center; gap:.65rem; width:100%; padding:.6rem .8rem;
+  border-radius:8px; color:rgba(255,255,255,.6); font-size:.82rem; font-weight:600;
+  transition:all .2s; text-align:left; font-family:var(--display);
+}
+.tutor-nav-btn:hover { background:rgba(255,255,255,.07); color:#fff; }
+.tutor-nav-btn--on   { background:var(--teal); color:#fff; }
+.tutor-side-foot { padding:.8rem .7rem 1rem; border-top:1px solid rgba(255,255,255,.1); }
+.tutor-side-user { display:flex; align-items:center; gap:.65rem; margin-bottom:.75rem; }
+.tutor-side-av {
+  width:34px; height:34px; border-radius:50%; background:var(--teal); color:#fff;
+  display:flex; align-items:center; justify-content:center; font-weight:800; font-size:.82rem;
+}
+.tutor-side-uname { font-size:.82rem; font-weight:700; color:#fff; }
+.tutor-side-urole { font-size:.68rem; color:rgba(255,255,255,.4); }
+.tutor-logout-btn {
+  display:flex; align-items:center; gap:.5rem; width:100%; padding:.5rem .8rem;
+  border-radius:8px; color:rgba(255,255,255,.5); font-size:.78rem; transition:all .2s;
+}
+.tutor-logout-btn:hover { background:rgba(225,29,72,.15); color:#f87171; }
+
+.tutor-main { flex:1; }
+.tutor-content { padding:1.8rem; }
+
+/* ── Resource form ── */
+.tutor-form {
+  background:#fff; border-radius:var(--r2); padding:1.4rem;
+  box-shadow:var(--sh-s); border:1px solid var(--line); margin-bottom:1.5rem;
+}
+.tutor-form__title { font-family:var(--display); font-size:1rem; font-weight:700; margin-bottom:1rem; }
+.tutor-form__grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:.8rem; margin-bottom:.8rem; }
+
+/* ── Resource list ── */
+.tutor-resource-list { display:flex; flex-direction:column; gap:.6rem; }
+.tutor-resource-item {
+  display:flex; align-items:flex-start; gap:.75rem;
+  background:#fff; border:1.5px solid var(--line); border-radius:var(--r2); padding:1rem;
+  transition:var(--ease);
+}
+.tutor-resource-item:hover { border-color:var(--teal); }
+.tutor-resource-type-icon {
+  width:38px; height:38px; border-radius:9px; flex-shrink:0;
+  background:rgba(15,118,110,.08); display:flex; align-items:center; justify-content:center;
+}

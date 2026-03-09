@@ -58,3 +58,37 @@
   .auth-promo { display: none; }
   .auth-form-side { padding: 2rem 1.25rem; min-height: 100vh; }
 }
+
+/* ── Forgot Password ── */
+.fp-back {
+  display: inline-flex; align-items: center; gap: .4rem;
+  font-size: .8rem; color: var(--teal); font-weight: 600;
+  margin-bottom: 1.5rem; transition: var(--ease);
+}
+.fp-back:hover { gap: .6rem; }
+
+.fp-input-wrap { position: relative; }
+.fp-input-icon {
+  position: absolute; left: .875rem; top: 50%; transform: translateY(-50%);
+  color: var(--ink-3); pointer-events: none;
+}
+.fp-input { padding-left: 2.5rem; }
+
+.fp-sent { text-align: center; }
+.fp-sent__icon {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: #d1fae5; color: var(--green);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1.25rem;
+}
+.fp-sent h2 { margin-bottom: .5rem; }
+.fp-sent p  { font-size: .875rem; color: var(--ink-2); line-height: 1.7; margin-bottom: 0; }
+.fp-sent p strong { color: var(--ink); }
+
+.fp-resend {
+  display: block; margin: 1rem auto 0; font-size: .8rem; color: var(--teal);
+  font-weight: 600; cursor: pointer; transition: var(--ease);
+}
+.fp-resend:hover { text-decoration: underline; }
+.auth-fp-link { font-size: .75rem; color: var(--teal); font-weight: 600; transition: var(--ease); }
+.auth-fp-link:hover { text-decoration: underline; }
