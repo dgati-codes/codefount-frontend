@@ -1,7 +1,7 @@
 import { useState } from "react";
+import { MapPin, Phone, Mail, Clock, Send, CheckCircle } from "lucide-react";
 import { enquiries } from "../../api/api";
 import { useAuth } from "../../context/AuthContext";
-import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
 import "./Contact.css";
 
 export default function Contact() {
@@ -9,8 +9,8 @@ export default function Contact() {
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
   const [form, setForm] = useState({
-    name: "",
-    email: "",
+    name: user?.full_name || "",
+    email: user?.email || "",
     phone: "",
     subject: "",
     message: "",
@@ -19,16 +19,17 @@ export default function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!form.name || !form.email || !form.message) {
+      alert("Name, email and message are required.");
+      return;
+    }
     setSending(true);
     try {
       if (user) await enquiries.submitAuth(form);
       else await enquiries.submit(form);
       setSent(true);
     } catch (err) {
-      alert(
-        err.response?.data?.detail ||
-          "Failed to send message. Please try again.",
-      );
+      alert(err.response?.data?.detail || "Failed to send. Please try again.");
     } finally {
       setSending(false);
     }
@@ -51,7 +52,6 @@ export default function Contact() {
 
       <section className="section">
         <div className="container ct-body">
-          {/* Info */}
           <div className="ct-info">
             <h2 className="ct-info__title">Contact Information</h2>
             <div className="ct-info__list">
@@ -95,15 +95,27 @@ export default function Contact() {
             <div className="ct-map">📍 Accra, Ghana</div>
           </div>
 
-          {/* Form */}
           <div className="ct-form">
             <h2 className="ct-form__title">Send a Message</h2>
             {sent ? (
               <div className="ct-success">
-                ✅ Message sent! We'll get back to you within 24 hours.
+                <CheckCircle
+                  size={40}
+                  color="var(--teal)"
+                  style={{ marginBottom: "1rem" }}
+                />
+                <h3>Message Sent!</h3>
+                <p>We'll get back to you within 24 hours.</p>
+                <button
+                  className="btn btn-primary"
+                  style={{ marginTop: "1rem" }}
+                  onClick={() => setSent(false)}
+                >
+                  Send Another
+                </button>
               </div>
             ) : (
-              <div className="ct-form__fields">
+              <form className="ct-form__fields" onSubmit={handleSubmit}>
                 <div className="ct-row">
                   <div className="form-group">
                     <label className="form-label">
@@ -112,6 +124,9 @@ export default function Contact() {
                     <input
                       className="form-input"
                       placeholder="Your full name"
+                      value={form.name}
+                      onChange={set("name")}
+                      required
                     />
                   </div>
                   <div className="form-group">
@@ -122,19 +137,29 @@ export default function Contact() {
                       className="form-input"
                       type="email"
                       placeholder="you@email.com"
+                      value={form.email}
+                      onChange={set("email")}
+                      required
                     />
                   </div>
                 </div>
                 <div className="ct-row">
                   <div className="form-group">
                     <label className="form-label">Phone</label>
-                    <input className="form-input" placeholder="+233 …" />
+                    <input
+                      className="form-input"
+                      placeholder="+233 …"
+                      value={form.phone}
+                      onChange={set("phone")}
+                    />
                   </div>
                   <div className="form-group">
                     <label className="form-label">Subject</label>
                     <input
                       className="form-input"
                       placeholder="Course enquiry…"
+                      value={form.subject}
+                      onChange={set("subject")}
                     />
                   </div>
                 </div>
@@ -146,16 +171,26 @@ export default function Contact() {
                     className="form-textarea"
                     rows={5}
                     placeholder="Tell us how we can help…"
+                    value={form.message}
+                    onChange={set("message")}
+                    required
                   />
                 </div>
                 <button
+                  type="submit"
                   className="btn btn-primary btn-lg"
                   style={{ width: "100%" }}
-                  onClick={() => setSent(true)}
+                  disabled={sending}
                 >
-                  Send Message <Send size={15} />
+                  {sending ? (
+                    "Sending…"
+                  ) : (
+                    <>
+                      <Send size={15} /> Send Message
+                    </>
+                  )}
                 </button>
-              </div>
+              </form>
             )}
           </div>
         </div>

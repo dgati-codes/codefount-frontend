@@ -9,7 +9,7 @@
  *  - Response interceptor: on 401, attempts one silent token refresh,
  *    then redirects to /login on failure
  *  - Namespaced helper objects (auth, courses, workshops, schedules, etc.)
- *    that mirror every backend endpoint, so pages never construct URLs manually.
+ *  - Pages never construct URLs manually.
  */
 
 import axios from 'axios';

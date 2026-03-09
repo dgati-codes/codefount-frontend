@@ -1,7 +1,7 @@
 /**
  * context/AuthContext.jsx
  * ========================
- * Real JWT authentication context.
+ *  JWT authentication context.
  *
  * On mount: rehydrates user from stored token via GET /auth/me.
  * Exposes: login, register, logout, updateUser, uploadAvatar, changePassword.

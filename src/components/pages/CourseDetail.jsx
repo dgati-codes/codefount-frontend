@@ -55,7 +55,9 @@ export default function CourseDetail() {
     if (!user) return;
     enrollments
       .my()
-      .then((list) => setEnrolled(list.some((e) => e.course_id === Number(id))))
+      .then((list) =>
+        setEnrolled(list.some((e) => Number(e.course_id) === Number(id))),
+      )
       .catch(() => {});
   }, [user, id]);
 
@@ -71,7 +73,7 @@ export default function CourseDetail() {
     setEnrolling(true);
     setErrMsg("");
     try {
-      await enrollments.enroll(Number(id));
+      await enrollments.enroll(Number(id)); // cast to int
       setEnrolled(true);
     } catch (err) {
       setErrMsg(
@@ -105,7 +107,10 @@ export default function CourseDetail() {
       </div>
     );
 
-  const pct = Math.round(((course.fee - course.offer) / course.fee) * 100);
+  const pct =
+    course.fee > 0
+      ? Math.round(((course.fee - course.offer) / course.fee) * 100)
+      : 0;
 
   return (
     <div className="page-enter">

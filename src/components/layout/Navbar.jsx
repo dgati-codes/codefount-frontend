@@ -1,18 +1,42 @@
-import { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, ChevronDown, LogOut, User, Home } from 'lucide-react';
-import { navLinks } from '../../data/mockData';
-import { useAuth } from '../../context/AuthContext';
-import './Navbar.css';
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Menu, X, ChevronDown, LogOut, User, Home } from "lucide-react";
+import { navLinks } from "../../data/mockData";
+import { useState, useEffect } from "react";
+import { notifications as notifApi } from "../../api/api";
+import { useAuth } from "../../context/AuthContext";
+import "./Navbar.css";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const { user, logout } = useAuth();
+  const [unreadBadge, setUnreadBadge] = useState(0);
+  const { user, logout, isAdmin, isTrainer } = useAuth();
+
+  useEffect(() => {
+    if (!user) {
+      setUnreadBadge(0);
+      return;
+    }
+    notifApi
+      .unreadCount()
+      .then((d) => setUnreadBadge(d?.unread || 0))
+      .catch(() => {});
+    const interval = setInterval(() => {
+      notifApi
+        .unreadCount()
+        .then((d) => setUnreadBadge(d?.unread || 0))
+        .catch(() => {});
+    }, 60000); // poll every 60s
+    return () => clearInterval(interval);
+  }, [user]);
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
   const close = () => setOpen(false);
-  const handleLogout = () => { logout(); navigate('/'); close(); };
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+    close();
+  };
 
   return (
     <header className="nav">
@@ -51,12 +75,47 @@ export default function Navbar() {
         <div className="nav__actions hide-mob">
           {user ? (
             <>
-              <Link to="/profile" className="nav__user">
-                <div className="nav__avatar">
-                  {user?.name ? user.name[0].toUpperCase() : "U"}
+              <Link
+                to="/profile"
+                className="nav__user"
+                style={{ position: "relative" }}
+              >
+                <div className="nav__avatar" style={{ position: "relative" }}>
+                  {(user.full_name || user.email || "U")[0].toUpperCase()}
+                  {unreadBadge > 0 && (
+                    <span
+                      style={{
+                        position: "absolute",
+                        top: -4,
+                        right: -4,
+                        width: 14,
+                        height: 14,
+                        background: "var(--amber)",
+                        borderRadius: "50%",
+                        fontSize: 9,
+                        fontWeight: 700,
+                        color: "#fff",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {unreadBadge > 9 ? "9+" : unreadBadge}
+                    </span>
+                  )}
                 </div>
-                <span>{user?.name || "User"}</span>
+                <span>{user.full_name || user.email}</span>
               </Link>
+              {isAdmin && (
+                <Link to="/admin" className="nav__portal-btn">
+                  ⚡ Admin
+                </Link>
+              )}
+              {isTrainer && !isAdmin && (
+                <Link to="/tutor" className="nav__portal-btn">
+                  🎓 Tutor
+                </Link>
+              )}
               <button
                 className="nav__logout"
                 onClick={handleLogout}
@@ -113,6 +172,34 @@ export default function Navbar() {
                 >
                   My Profile
                 </Link>
+                {user.role === "admin" && (
+                  <Link
+                    to="/admin"
+                    className="btn btn-sm"
+                    style={{
+                      background: "var(--navy)",
+                      color: "#fff",
+                      border: "none",
+                    }}
+                    onClick={close}
+                  >
+                    ⚡ Admin
+                  </Link>
+                )}
+                {(user.role === "trainer" || user.role === "admin") && (
+                  <Link
+                    to="/tutor"
+                    className="btn btn-sm"
+                    style={{
+                      background: "var(--teal)",
+                      color: "#fff",
+                      border: "none",
+                    }}
+                    onClick={close}
+                  >
+                    🎓 Tutor
+                  </Link>
+                )}
                 <button
                   className="btn btn-primary btn-sm"
                   onClick={handleLogout}

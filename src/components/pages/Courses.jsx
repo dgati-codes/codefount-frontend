@@ -25,10 +25,12 @@ export default function Courses() {
       const data = await coursesApi.list(params);
       setItems(data.items || []);
       setTotal(data.total || 0);
-      // Build category list from first full load
-      if (active === ALL && !search && page === 1) {
-        const uniq = [...new Set((data.items || []).map((c) => c.category))];
-        setCats([ALL, ...uniq]);
+      // Always refresh category list when unfiltered
+      if (active === ALL && !search) {
+        const uniq = [
+          ...new Set((data.items || []).map((c) => c.category).filter(Boolean)),
+        ];
+        if (uniq.length > 0) setCats([ALL, ...uniq]);
       }
     } catch (e) {
       console.error("Failed to load courses", e);
